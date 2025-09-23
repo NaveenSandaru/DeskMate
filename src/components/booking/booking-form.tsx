@@ -4,7 +4,6 @@ import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { submitBooking } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -56,24 +55,6 @@ export default function BookingForm({ space }: BookingFormProps) {
     formData.append('email', values.email);
     formData.append('phone', values.phone);
     formData.append('duration', values.duration);
-
-    startTransition(async () => {
-      const result = await submitBooking(null, formData);
-      if (result.success) {
-        toast({
-          title: 'Success!',
-          description: result.message,
-        });
-        form.reset();
-        setDate(new Date());
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: result.message || 'An error occurred.',
-        });
-      }
-    });
   };
 
   return (

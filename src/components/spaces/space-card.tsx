@@ -19,26 +19,26 @@ const typeLabels: Record<Space['type'], string> = {
 };
 
 const typeLinks: Record<string, string> = {
-    'sunlight-studio': '/private-office/sunlight-studio',
-    'modern-private-office': '/private-office/the-hive',
-    'urban-oasis-desk': '/hot-desk',
-    'huddle-pods': '/huddle-pods',
-    'collaborate-hub-room': '/meeting-room',
-    'quiet-corner-desk': '/dedicated-desk',
+  'sunlight-studio': '/private-office/sunlight-studio',
+  'modern-private-office': '/private-office/the-hive',
+  'urban-oasis-desk': '/hot-desk',
+  'huddle-pods': '/huddle-pods',
+  'collaborate-hub-room': '/meeting-room',
+  'quiet-corner-desk': '/dedicated-desk',
 };
 
 export default function SpaceCard({ space }: SpaceCardProps) {
   const link = typeLinks[space.id] || `/spaces/${space.id}`;
-  
+
   const getPrice = () => {
     if (space.pricing.monthly) {
-        return `LKR ${space.pricing.monthly.toLocaleString()}/month`;
+      return `LKR ${space.pricing.monthly.toLocaleString()}/month`;
     }
     if (space.pricing.daily) {
-        return `LKR ${space.pricing.daily.toLocaleString()}/day`;
+      return `LKR ${space.pricing.daily.toLocaleString()}/day`;
     }
     if (space.pricing.hourly) {
-        return `LKR ${space.pricing.hourly.toLocaleString()}/hr`;
+      return `LKR ${space.pricing.hourly.toLocaleString()}/hr`;
     }
     return 'N/A';
   }
@@ -57,20 +57,22 @@ export default function SpaceCard({ space }: SpaceCardProps) {
       </div>
       <CardHeader>
         <div className="flex justify-between items-start gap-4">
-            <CardTitle className="font-headline text-xl">{space.name}</CardTitle>
-            <Badge variant="secondary">{typeLabels[space.type]}</Badge>
+          <CardTitle className="font-headline text-xl">{space.name}</CardTitle>
+          <Badge variant="secondary">{typeLabels[space.type]}</Badge>
         </div>
-        <CardDescription className="line-clamp-2 h-[3rem]">{space.description}</CardDescription>
+        <CardDescription className="max-h-20 overflow-y-auto">
+          {space.description}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
         <div className="flex justify-between items-center text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                <span>Up to {space.capacity} {space.capacity > 1 ? 'people' : 'person'}</span>
-            </div>
-            <p className="font-semibold text-foreground text-lg">
-                {getPrice()}
-            </p>
+          <div className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            <span>Up to {space.capacity} {space.capacity > 1 ? 'people' : 'person'}</span>
+          </div>
+          <p className="font-semibold text-foreground text-lg">
+            {getPrice()}
+          </p>
         </div>
       </CardContent>
       <CardFooter>

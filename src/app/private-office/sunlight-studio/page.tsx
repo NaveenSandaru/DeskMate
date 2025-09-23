@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -16,6 +18,11 @@ const features = [
 const sunlightStudioSpace = spaces.find(space => space.id === 'sunlight-studio');
 
 export default function SunlightStudioPage() {
+
+  const goToContact = () => {
+    window.location.href = "/?workspace=private_office#callback"
+  }
+
   if (!sunlightStudioSpace) {
     return <div>Space not found</div>;
   }
@@ -76,7 +83,7 @@ export default function SunlightStudioPage() {
                 <p className="text-muted-foreground mb-6">
                     Sunlight Studio is perfect for professionals and teams looking for a bright, motivating space that supports productivity, creativity, and well-being.
                 </p>
-                <Button size="lg">
+                <Button size="lg" onClick={goToContact}>
                     Get Quote
                 </Button>
             </div>
