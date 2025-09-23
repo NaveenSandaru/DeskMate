@@ -1,11 +1,9 @@
 'use client';
 
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { submitCallbackRequest } from '@/app/actions';
-import { spaces } from '@/lib/data';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -15,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Send } from 'lucide-react';
+import emailjs from "emailjs-com";
 
 const callbackFormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required.' }),
@@ -38,6 +37,7 @@ const typeLabels: { [key: string]: string } = {
 export default function CallbackForm() {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
+  const [sendingMail, setSendingMail] = useState(false);
 
   const form = useForm<CallbackFormValues>({
     resolver: zodResolver(callbackFormSchema),
@@ -50,32 +50,43 @@ export default function CallbackForm() {
     },
   });
 
-  const onSubmit = (values: CallbackFormValues) => {
-    const formData = new FormData();
-    formData.append('name', values.name);
-    formData.append('companyName', values.companyName || '');
-    formData.append('email', values.email);
-    formData.append('phone', values.phone);
-    formData.append('workspace', values.workspace);
-    formData.append('message', values.message || '');
-
-    startTransition(async () => {
-      const result = await submitCallbackRequest(null, formData);
-      if (result.success) {
-        toast({
-          title: 'Request Sent!',
-          description: result.message,
+  const onSubmit = async (values: CallbackFormValues) => {
+    setSendingMail(true);
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID!,
+        {
+          title: "New call back request",
+          name: values.name,
+          companyName: values.companyName || "-",
+          email: values.email,
+          phone: values.phone,
+          workspace: typeLabels[values.workspace],
+          message: values.message || "-",
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+      )
+        .then(() => toast({
+          title: "Success",
+          description: "Email sent"
+        }))
+        .catch((err: any) => {
+          console.error("EmailJS error:", err);
+          throw new Error("Failed to send email.");
         });
-        form.reset();
-      } else {
+    }
+    catch (err: any) {
         toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: result.message || 'An error occurred.',
+          title: "Error",
+          description: err.message
         });
-      }
-    });
+    }
+    finally {
+      setSendingMail(false);
+    }
   };
+
 
   return (
     <Card className="bg-black border-gray-700 p-8 rounded-lg shadow-lg">
@@ -91,61 +102,61 @@ export default function CallbackForm() {
                 <FormControl><Input placeholder="Name" {...field} className="bg-white text-black border-gray-600" /></FormControl>
                 <FormMessage />
               </FormItem>
-            )}/>
+            )} />
             <FormField control={form.control} name="companyName" render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Company Name</FormLabel>
                 <FormControl><Input placeholder="Company Name" {...field} className="bg-white text-black border-gray-600" /></FormControl>
                 <FormMessage />
               </FormItem>
-            )}/>
+            )} />
             <FormField control={form.control} name="email" render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Email <span className="text-red-500">*</span></FormLabel>
                 <FormControl><Input type="email" placeholder="Email" {...field} className="bg-white text-black border-gray-600" /></FormControl>
                 <FormMessage />
               </FormItem>
-            )}/>
+            )} />
             <FormField control={form.control} name="phone" render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Phone Number <span className="text-red-500">*</span></FormLabel>
                 <FormControl><Input type="tel" placeholder="Phone Number" {...field} className="bg-white text-black border-gray-600" /></FormControl>
                 <FormMessage />
               </FormItem>
-            )}/>
-             <FormField
-                control={form.control}
-                name="workspace"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">Select Workspace <span className="text-red-500">*</span></FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-white text-black border-gray-600">
-                          <SelectValue placeholder="Select a workspace" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.keys(typeLabels).map((type) => (
-                           <SelectItem key={type} value={type}>{typeLabels[type]}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            )} />
+            <FormField
+              control={form.control}
+              name="workspace"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Select Workspace <span className="text-red-500">*</span></FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="bg-white text-black border-gray-600">
+                        <SelectValue placeholder="Select a workspace" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {Object.keys(typeLabels).map((type) => (
+                        <SelectItem key={type} value={typeLabels[type]}>{typeLabels[type]}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField control={form.control} name="message" render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white">Additional Requests</FormLabel>
                 <FormControl><Textarea placeholder="Message" rows={4} {...field} className="bg-white text-black border-gray-600" /></FormControl>
                 <FormMessage />
               </FormItem>
-            )}/>
+            )} />
           </CardContent>
           <CardFooter className="p-0 mt-6">
             <Button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-black font-bold" disabled={isPending}>
-              {isPending ? (
+              {sendingMail ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Send className="mr-2 h-4 w-4" />

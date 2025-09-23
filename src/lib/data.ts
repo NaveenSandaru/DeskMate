@@ -12,7 +12,7 @@ export const spaces: Space[] = [
       hourly: 10,
       daily: 50,
       weekly: 200,
-      monthly: 12000,
+      monthly: 18000,
     },
     type: 'hot_desk',
   },
@@ -26,7 +26,7 @@ export const spaces: Space[] = [
     pricing: {
       hourly: 0,
       daily: 0,
-      monthly: 105000,
+      monthly: 30000,
     },
     type: 'huddle_pods',
   },
@@ -38,7 +38,7 @@ export const spaces: Space[] = [
     amenities: ['wifi', 'coffee', 'whiteboard', 'kitchen'],
     images: [`/images/meeting-room.jpg?v=${new Date().getTime()}`, `/images/meeting-room-2.jpg?v=${new Date().getTime()}`],
     pricing: {
-      hourly: 750,
+      hourly: 1250,
       daily: 0,
     },
     type: 'meeting_room',
@@ -53,7 +53,7 @@ export const spaces: Space[] = [
     pricing: {
       hourly: 0,
       daily: 0,
-      monthly: 22000,
+      monthly: 25000,
     },
     type: 'dedicated_desk',
   },
@@ -65,7 +65,7 @@ export const spaces: Space[] = [
     amenities: ['wifi', 'coffee', 'parking'],
     images: [`/images/sunlight-studio.jpg?v=${new Date().getTime()}`, `/images/sunlight-studio-2.jpg?v=${new Date().getTime()}`],
     pricing: {
-      hourly: 1500,
+      hourly: 2500,
       daily: 0,
     },
     type: 'private_office',

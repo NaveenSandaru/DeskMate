@@ -7,6 +7,7 @@ import Footer from '@/components/layout/footer';
 export const metadata: Metadata = {
   title: 'DeskMate',
   description: 'Discover and book co-working and meeting spaces.',
+  icons: '/images/logo.png'
 };
 
 export default function RootLayout({
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full scroll-smooth">
       <head>
+        <link rel="icon" href="/images/logo.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
