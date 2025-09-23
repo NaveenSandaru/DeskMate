@@ -1,0 +1,87 @@
+import type { Space } from './types';
+
+export const spaces: Space[] = [
+  {
+    id: 'urban-oasis-desk',
+    name: 'Urban Hot Desk',
+    description: 'A vibrant, open-plan hot desk area perfect for freelancers and remote workers. Enjoy our high-speed Wi-Fi and unlimited coffee.',
+    capacity: 1,
+    amenities: ['wifi', 'coffee', 'printing'],
+    images: [`/images/urban-hot-desk.jpg?v=${new Date().getTime()}`, `/images/urban-hot-desk-2.jpg?v=${new Date().getTime()}`],
+    pricing: {
+      hourly: 10,
+      daily: 50,
+      weekly: 200,
+      monthly: 12000,
+    },
+    type: 'hot_desk',
+  },
+  {
+    id: 'huddle-pods',
+    name: 'Huddle Pods',
+    description: 'Ideal for 2–4 person huddles, these pods are perfect for small team discussions, meetings, or quick interviews. Offering a balance of privacy and comfortable seating, they create an effective space for focused working sessions within a collaborative environment.',
+    capacity: 4,
+    amenities: ['wifi', 'coffee', 'whiteboard'],
+    images: [`/images/huddle-pods.jpg?v=${new Date().getTime()}`, `/images/huddle-pods-2.jpg?v=${new Date().getTime()}`],
+    pricing: {
+      hourly: 0,
+      daily: 0,
+      monthly: 105000,
+    },
+    type: 'huddle_pods',
+  },
+  {
+    id: 'collaborate-hub-room',
+    name: 'Collaborative Meeting Room',
+    description: 'A modern meeting room equipped with a large screen, whiteboard, and video conferencing facilities. Perfect for team meetings and client presentations.',
+    capacity: 8,
+    amenities: ['wifi', 'coffee', 'whiteboard', 'kitchen'],
+    images: [`/images/meeting-room.jpg?v=${new Date().getTime()}`, `/images/meeting-room-2.jpg?v=${new Date().getTime()}`],
+    pricing: {
+      hourly: 750,
+      daily: 0,
+    },
+    type: 'meeting_room',
+  },
+  {
+    id: 'quiet-corner-desk',
+    name: 'Mindspace Dedicated Desk',
+    description: 'A serene and dedicated desk for focused work. Ideal for individuals needing a dedicated space.',
+    capacity: 1,
+    amenities: ['wifi', 'coffee', 'printing'],
+    images: [`/images/dedicated-desk.jpg?v=${new Date().getTime()}`, `/images/dedicated-desk-2.jpg?v=${new Date().getTime()}`],
+    pricing: {
+      hourly: 0,
+      daily: 0,
+      monthly: 22000,
+    },
+    type: 'dedicated_desk',
+  },
+  {
+    id: 'sunlight-studio',
+    name: 'Sunlight Studio',
+    description: 'A bright and airy private office filled with natural light. Comes with ergonomic furniture and dedicated parking.',
+    capacity: 4,
+    amenities: ['wifi', 'coffee', 'parking'],
+    images: [`/images/sunlight-studio.jpg?v=${new Date().getTime()}`, `/images/sunlight-studio-2.jpg?v=${new Date().getTime()}`],
+    pricing: {
+      hourly: 1500,
+      daily: 0,
+    },
+    type: 'private_office',
+  },
+  {
+    id: 'modern-private-office',
+    name: 'The Hive',
+    description: 'A vibrant private office designed for energy and inspiration. With modern interiors, ergonomic setups, and a touch of creativity, this space fuels both focus and collaboration. Perfect for small teams ready to build big ideas.',
+    capacity: 4,
+    amenities: ['wifi', 'coffee', 'parking', 'printing'],
+    images: [`/images/the-hive.jpg?v=${new Date().getTime()}`, `/images/the-hive-2.jpg?v=${new Date().getTime()}`],
+    pricing: {
+      hourly: 0,
+      daily: 0,
+      monthly: 80000,
+    },
+    type: 'private_office',
+  },
+];
