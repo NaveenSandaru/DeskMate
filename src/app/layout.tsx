@@ -1,13 +1,22 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css';
-import {Toaster} from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/toaster';
+import WhatsappIcon from '@/components/layout/whatsapp-icon';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 
 export const metadata: Metadata = {
   title: 'DeskMate',
   description: 'Discover and book co-working and meeting spaces.',
-  icons: '/images/logo.png'
+  icons: {
+    icon: '/images/logoOnly.png',
+    shortcut: '/images/logoOnly.png',
+    apple: '/images/logoOnly.png',
+    other: {
+      rel: 'apple-touch-icon',
+      url: '/images/logoOnly.png',
+    },
+  }
 };
 
 export default function RootLayout({
@@ -29,6 +38,7 @@ export default function RootLayout({
       <body className="font-body antialiased flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">{children}</main>
+        <WhatsappIcon />
         <Footer />
         <Toaster />
       </body>
